@@ -138,6 +138,73 @@ console.log(xiaoming.age());
 getAge();
 console.log(getAge.apply(xiaoming,[]));
 
+// high-order-function
+function add(x,y,f){
+	return f(x) + f(y);
+}
+
+var x = add(5,-6,Math.abs);
+console.log(x);
+
+
+function pow(x){
+	return x**2;
+}
+
+//var arr = [1,2,3,4,5,6,7,8];
+var i,arr = [];
+for (i=1;i<=10;i++){
+	arr.push(i);
+}
+console.log(`arr is ${arr}`);
+var res = arr.map(pow);
+console.log(`arr map result is ${res}`);
+
+var arr = [1,2,4,5,9,6,15];
+var r = arr.filter(function(x){return x % 2!==0;});
+console.log(`r is ${r}`);
+
+// filter 
+
+var arr = ['A','','B',null,undefined,'C',' '];
+var r = arr.filter(function(s){
+	return s && s.trim();
+});
+
+console.log(`arr is ${arr}, while r is ${r}`);
+
+// filter 去除array中的重复元素
+var 
+	r,
+	arr = ['apple', 'strawberry', 'banana', 'pear', 'apple', 'orange', 'orange', 'strawberry'];
+
+r = arr.filter(function (element,index,self){
+	return self.indexOf(element) === index;
+});
+console.log(`arr is ${arr}, while r is ${r}`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
