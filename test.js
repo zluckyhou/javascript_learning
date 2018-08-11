@@ -183,26 +183,211 @@ r = arr.filter(function (element,index,self){
 });
 console.log(`arr is ${arr}, while r is ${r}`);
 
+// sort
+var arr = [10,20,1,2];
+arr.sort(function(x,y){
+	if (x<y){
+		return -1;
+	}
+	if (x>y){
+		return 1;
+	}
+	return 0;	
+});
+console.log(arr);
+
+
+var arr = ['Google','apple','Microsoft'];
+arr.sort(function(s1,s2){
+	x1 = s1.toUpperCase();
+	x2 = s2.toUpperCase();
+	if (x1>x2){
+		return 1;
+	}
+	else if (x1< x2){
+		return -1;
+	}
+	else 
+		return 0;
+});
+console.log(arr);
+
+
+// closure
+
+//函数作为返回值
 
 
 
+function lazy_sum(arr){
+	var sum = function(){
+		return arr.reduce(function(x,y){
+			return x+y;
+		});
+}
+	return sum;
+}
+
+var f = lazy_sum([1,2,3,4,5]);
+f();
 
 
+function create_counter(initial){
+	var x = initial || 0;
+	return {
+		inc:function(x){
+			x += 1;
+			return x;
+		}
+	}
+}
+
+var c1 = create_counter();
+c1.inc();
+c1.inc();
+c1.inc();
+
+var c2 = create_counter(10);
+c2.inc();
+c2.inc();
+c2.inc();
+
+function make_pow(n){
+	return function(x){
+		return Math.pow(x,n)
+	}
+}
+
+var pow2 = make_pow(2);
+var pow3 = make_pow(3);
+
+console.log(`pow2(5) is ${pow2(5)}`);
+console.log(`pow3(7) is ${pow3(7)}`);
 
 
+// arrow function
+
+x => x*x;
+var fn = x => x*x;
+console.log(`x => x*x: fn(3) = ${fn(3)}`);
+
+x => {
+	if (x>0){
+		return x*x;
+	}
+	else 
+		return -x*x;
+}
+
+(x,y,...rest) => {
+	var i,sum = x+y;
+	for (i=0;i<rest.length;i++){
+		sum += rest[i];
+	}
+	return sum;
+}
+
+x => ({foo:x})
+
+var obj = {
+	birth:1990,
+	getAge:function(){
+		var b = this.birth;
+		var fn = () => new Date().getFullYear()-this.birth;
+		return fn();
+	}
+}
+
+console.log(obj.getAge());
 
 
+var obj = {
+	birth:1990,
+	/*
+	getAge:function(){
+	//	var b = this.birth;
+	//	var fn = () =>  new Date().getFullYear()-b;
+		return new Date().getFullYear()-this.birth;
+	}
+	*/
+	age:new Date().getFullYear()-this.birth
+}
+
+console.log(`age is ${obj.age}`);
+
+var obj = {
+	birth:1990,
+	getAge:function(year){
+		var b = this.birth;
+		var fn = (y) => y-this.birth;
+//		return fn.call({birth:2000},year);
+		return fn(year);
+	}
+}
+
+console.log(obj.getAge(2018));
+console.log(obj.getAge.call({birth:2000},2018))
+
+//generator
+
+function foo(x){
+	return x*x;
+}
+
+var r = foo(1);
+
+function* foo(x){
+	yield x+1;
+	yield x+2;
+	return x+3;
+}
+
+function fib(max){
+	var 
+		t,
+		a=0,
+		b=1,
+		arr = [0,1];
+	while (arr.length<max){
+		[a,b] = [b,a+b];
+		arr.push(b);
+	}
+	return arr;
+}
+
+function* fib(max){
+	var 
+		t,
+		a=0,
+		b=1,
+		n=0;
+	while (n<max){
+		yield a;
+		[a,b] = [b,a+b];
+		n++;
+	}
+	return;
+}
+
+var f = fib(5);
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
 
 
+var f = fib(10);
+/*
+while (f.next().value){
+	console.log(f.next());
+}
+*/
 
-
-
-
-
-
-
-
-
+for (var x of f){
+	console.log(x);
+}
 
 
 
