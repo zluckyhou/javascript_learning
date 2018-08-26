@@ -389,11 +389,144 @@ for (var x of f){
 	console.log(x);
 }
 
+//object
+
+//Date
+
+var now = new Date();
+console.log(now);
+console.log(now.getFullYear());
+console.log(now.getMonth());
+console.log(now.getDate());
+console.log(now.getDay());
+console.log(now.getHours());
+console.log(now.getMinutes());
+console.log(now.getSeconds());
+console.log(now.getMilliseconds());
+console.log(now.getTime());
 
 
+//RegExp
+
+var re1 = /ABC\-001/;
+var re2 = new RegExp('ABC\\-001');
+console.log(re1);
+console.log(re2)
+
+var re = /^\d{3}\-\d{3,8}$/;
+re.test('010-12345');
+re.test('010-1234x');
+re.test('010 12345');
+
+console.log('a b c   d    e'.split(/\s+/));
+console.log('a,b,c  d'.split(/[\s\,]+/));
+console.log('a,b;;c  d'.split(/[\s\,\;]+/));
+
+var re = /^(\d{3})[\-\s](\d{3,8})$/;
+console.log(re.exec('010-12345'));
+console.log(re.exec('010 12345'));
+
+//贪婪匹配
+var re = /^(\d+)(0*)$/;
+console.log(re.exec('123000'));
+
+var re = /^(\d+?)(0*)$/;
+console.log(re.exec('123000'));
+
+var s = 'JavaScript, VBScript, JScript and ECMAScript';
+var re = /[a-zA-Z]+Script/g;
+console.log(re.exec(s));
+
+//JSON
 
 
+var xiaoming = {
+	name:'小明',
+	age:14,
+	gender:true,
+	height:1.65,
+	grade:null,
+	'middle-school':'\"W3D\" Middle School',
+	skills:['JavaScript','Java','Python','Lisp']
+};
 
+var s = JSON.stringify(xiaoming,null,'  ');
+console.log(s);
+
+var s = JSON.stringify(xiaoming,['name','skills','age'],'	');
+console.log(s);
+
+function convert(key,value){
+	if (typeof value==='string'){
+		return value.toUpperCase();
+		}
+	return value;
+}
+
+console.log(JSON.stringify(xiaoming,convert,'	'));
+
+
+var xiaoming = {
+	name:'小明',
+	age:14,
+	gender:true,
+	height:1.65,
+	grade:null,
+	'middle-school':'\"W3D\" Middle School',
+	skills:['JavaScript','Java','Python','Lisp'],
+	/*
+	toJSON:function () {
+		return {
+			'Name':this.name,
+			'Age':this.age
+		};
+	}
+	*/
+	toJSON:() => ({'Name':this.name,'Age':this.age})
+
+};
+
+console.log(JSON.stringify(xiaoming));
+
+//反序列化
+
+
+console.log(JSON.parse('[1,2,3,true]'));
+console.log(JSON.parse('{"name":"小明","age":14}'));
+
+var obj = JSON.parse('{"name":"bob","age":16}',(key,value) => {if (key==='name'){return value+'同学';} else {return value;}});
+
+console.log(JSON.stringify(obj,null,'	'));
+
+var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json';
+
+/*
+$.getJSON(url,function (data){
+	var city = data.query.results.channel.location.city;
+	var forecast = data.query.results.channel.item.forecase;
+	var result = {
+		city:city,
+		forecast:forecase
+	};
+	alert(JSON.stringify(result,null,'	'));
+});
+*/
+
+// create object
+
+var arr = [1,2,3];
+function foo(){
+	return 0;
+}
+
+function Student(name){
+	this.name = name;
+	this.hello = ()=> {alert('hello, '+ this.name+'!')}
+}
+
+var xiaoming = new Student('小明');
+console.log(xiaoming.name);
+xiaoming.hello();
 
 
 
